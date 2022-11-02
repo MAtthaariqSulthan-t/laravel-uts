@@ -28,7 +28,6 @@ class UpdateProductRequest extends FormRequest
             'category_id' => 'required',
             'status' => 'required|in:active,inactive,draft',
             'description' => 'required',
-            'image' => 'required',
             'weight' => 'required|numeric',
             'price' => 'required|numeric',
         ];
