@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,4 @@ Route::get('/', function () {
 });
 Route::resource('product', ProductController::class);
 Route::resource('category', CategoryController::class);
+Route::get('/transaction', [TransactionController::class, 'store']);
