@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('transaction_details', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('transaction_id')->constrained();
-            $table->foreignId('product_id')->constrained();
+            $table->uuid('id');
+            $table->uuid('transaction_id');
+            $table->integer('product_id');
             $table->integer('quantity');
             $table->float('amount',12,2);
             $table->timestamps();

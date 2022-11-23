@@ -19,7 +19,7 @@ class ProductSeeder extends Seeder
     {
         $faker = Factory::create('id_ID');
         $categories = Category::get();
-        $image = "images"/"product"/""
+        //$image = "images";
         Product::create([
             "category_id" => $categories->random()->id,
             "title" => $categories,

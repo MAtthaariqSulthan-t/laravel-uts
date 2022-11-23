@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     use HasFactory;
-    protected $fillable=['customer', 'total_amount'];
+    protected $fillable=['id', 'customer', 'total_amount'];
+    public $incrementing=false;
 
+    public function details()
+    {
+        return $this->hasMany(transactionDetail::class);
+    }
+
+    //public $incrementing - false;
 }
