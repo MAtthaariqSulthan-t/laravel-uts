@@ -20,11 +20,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('product', ProductController::class);
-Route::resource('category', CategoryController::class);
-Route::get('/transaction', [TransactionController::class, 'store']);
+
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/example', [App\Http\Controllers\ExampleController::class, 'example'])->name('example');
-Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('product', ProductController::class);
+    Route::resource('category', CategoryController::class);
+    Route::get('/transaction', [TransactionController::class, 'store']);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/example', [App\Http\Controllers\ExampleController::class, 'example'])->name('example');
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+});

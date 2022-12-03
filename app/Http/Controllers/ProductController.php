@@ -58,6 +58,9 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
+        if (!Auth::user()->hasPermissionTo('form category')) {
+            return redirect()->route('category.index')->with('notif');
+        }
         $data = $request->all();
         $data['image'] = ($request->file('image')->store('images/product', 'public'));
         Product::create($data);
@@ -83,8 +86,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-
-        return view('pages.product.form',[
+        if (!Auth::user()->hasPermissionTo('form category')) {
+            return redirect()->route('category.index')->with('notif');
+        }
+        return view('pages.product.form', [
             'product' => $product,
             'categories' => Category::get()
         ]);
@@ -110,7 +115,7 @@ class ProductController extends Controller
         }
         $product->update($data);
 
-        return redirect('product')->with('notif','berhasil update data');
+        return redirect('product')->with('notif', 'berhasil update data');
     }
 
     /**
@@ -124,6 +129,6 @@ class ProductController extends Controller
         $product->delete($product->id);
         File::delete(storage_path('app/public/') . $product->image);
 
-        return redirect('product')->with('notif','berhasil hapus data');
+        return redirect('product')->with('notif', 'berhasil hapus data');
     }
 }
