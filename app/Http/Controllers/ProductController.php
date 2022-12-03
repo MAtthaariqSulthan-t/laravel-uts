@@ -33,9 +33,9 @@ class ProductController extends Controller
                 $query->where('category_id', '=', $filter);
             });
         }
-        $data = $data->paginate(10);
+        $data = $data->paginate(5);
         $categories = Category::get();
-        return view('pages.product.list', ['data' => $data, 'categories' => $categories]);
+        return view('admin.pages.product.list', ['data' => $data, 'categories' => $categories]);
     }
 
     /**
