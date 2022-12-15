@@ -58,9 +58,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        if (!Auth::user()->hasPermissionTo('form category')) {
-            return redirect()->route('category.index')->with('notif');
-        }
+
         $data = $request->all();
         $data['image'] = ($request->file('image')->store('images/product', 'public'));
         Product::create($data);

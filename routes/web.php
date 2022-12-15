@@ -21,9 +21,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('product', ProductController::class);
     Route::resource('category', CategoryController::class);
     Route::get('/transaction', [TransactionController::class, 'store']);
@@ -31,3 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/example', [App\Http\Controllers\ExampleController::class, 'example'])->name('example');
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 });
+
+// Route::get('/send-mail', function() {
+//     Mail::to('asd@gmail.com')->send(new MailtrapExample());
+//     return ' Am'
+// }

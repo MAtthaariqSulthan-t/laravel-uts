@@ -7,6 +7,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
+            @if ($message = Session::get('notif'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ $message }}</strong>
+            <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          @endif
             <h1>DataTablesProduct</h1>
           </div>
           <div class="col-sm-6">
