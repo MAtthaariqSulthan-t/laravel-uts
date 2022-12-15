@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -15,8 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::get();
-        return view('pages.category.list', ['data' => $data]);
+        $data = Category::paginate(5);
+        return view('admin.pages.category.list', ['data' => $data]);
     }
 
     /**
@@ -38,6 +39,9 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
+        if (!Auth::user()->hasPermissionTo('form category')) {
+            return redirect()->route('category.index')->with('notif');
+        }
         $data = $request->all();
         Category::create($data);
         return redirect()->route('category.index')->with('notif', 'Berhasil Menyimpan');
@@ -63,8 +67,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        if (!Auth::user()->hasPermissionTo('form category')) {
+            return redirect()->route('category.index')->with('notif');
+        }
         return view('pages.category.form', ['category' => $category]);
-
     }
 
     /**

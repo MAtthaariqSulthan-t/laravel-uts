@@ -17,17 +17,20 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
+        Product::truncate();
         $faker = Factory::create('id_ID');
         $categories = Category::get();
         //$image = "images";
+        for ($i = 0; $i < 100; $i++) {
         Product::create([
             "category_id" => $categories->random()->id,
-            "title" => $categories,
-            "status" => $categories,
-            "description" => $categories,
-            "image" => $categories,
-            "weight" => $categories,
-            "price" => $categories,
+            "title" => 'palugada',
+            "status" => 'active',
+            "description" => 'palugada',
+            "image" => 'images/product/ATmfYfUuxFHxNaCaKfRLN4X2LrVPri1zxxN3ezgn.png',
+            "weight" => 10,
+            "price" => 10,
         ]);
+    }
     }
 }
