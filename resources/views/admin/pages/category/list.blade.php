@@ -44,7 +44,8 @@
                   <tbody>
                 @foreach ($data as $item)
                   <tr>
-                    <td>{{ ($data->currentPage() -1) * $data->perPage() + $loop->iteration }}</td>
+                    {{-- <td>{{ ($data->currentPage() -1) * $data->perPage() + $loop->iteration }}</td> --}}
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->description }}</td>
                     <td>{{ $item->status }}</td>
@@ -65,7 +66,7 @@
                   </tfoot>
                 </table>
                 <br>
-                {{ $data->withQueryString()->links() }}
+                {{-- {{ $data->withQueryString()->links() }} --}}
               </div>
               <!-- /.card-body -->
             </div>

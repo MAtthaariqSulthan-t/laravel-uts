@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 
@@ -20,22 +21,25 @@ class ProductController extends Controller
     {
         $search = $request->input('search');
         $filter = $request->input('filter');
-        $data = Product::with(['category']);
-        if ($search) {
-            $data->where(function ($query) use ($search) {
-                $query->where('title', 'like', "%$search%")
-                    ->orWhere('description', 'like', "%$search%");
-            });
-        }
+        $data = Cache::remember('all-products', 60, function () use ($search, $filter) {
 
-        if ($filter) {
-            $data->where(function ($query) use ($filter) {
-                $query->where('category_id', '=', $filter);
-            });
-        }
-        $data = $data->paginate(5);
-        $categories = Category::get();
-        return view('admin.pages.product.list', ['data' => $data, 'categories' => $categories]);
+            $data = Product::with(['category']);
+            if ($search) {
+                $data->where(function ($query) use ($search) {
+                    $query->where('title', 'like', "%$search%")
+                        ->orWhere('description', 'like', "%$search%");
+                });
+            }
+
+            if ($filter) {
+                $data->where(function ($query) use ($filter) {
+                    $query->where('category_id', '=', $filter);
+                });
+            }
+            return $data->get();
+        });
+        // $categories = Category::get();
+        return view('admin.pages.product.list', ['data' => $data]);
     }
 
     /**

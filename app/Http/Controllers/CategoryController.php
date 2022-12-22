@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::paginate(5);
+        $data = Category::get();
         return view('admin.pages.category.list', ['data' => $data]);
     }
 
