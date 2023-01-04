@@ -19,7 +19,12 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        // $data = Transaction::get();
+        // return view('admin.pages.transaction.list', [
+        //     'data' => $data,
+        // ]);
+        $data = Transaction::get();
+        return view('admin.pages.transaction.list', ['data' => $data]);
     }
 
     /**
@@ -40,7 +45,7 @@ class TransactionController extends Controller
      */
     public function store(StoreTransactionRequest $request)
     {
-        $products = [1,2,3,4,5,6];
+        $products = [1, 2, 3, 4, 5, 6];
         DB::beginTransaction();
         try {
             $transaction = Transaction::create([
@@ -50,7 +55,7 @@ class TransactionController extends Controller
             ]);
 
             $transactiondetails = [];
-            foreach($products as $key => $value) {
+            foreach ($products as $key => $value) {
                 $transactiondetails[] = [
                     'id' => Uuid::uuid4()->toString(),
                     'transaction_id' => $transaction->id,
@@ -60,16 +65,15 @@ class TransactionController extends Controller
                     'created_at' => Carbon::now()
                 ];
             }
-            if($transactiondetails){
+            if ($transactiondetails) {
                 TransactionDetail::insert($transactiondetails);
             }
             DB::commit();
             return "ok";
         } catch (\Throwable $th) {
             DB::rollback();
-           return $th;
+            return $th;
         }
-
     }
 
     /**
@@ -80,7 +84,23 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        //
+        // $data = $transaction->load(['details']);
+        // return view('admin.pages.transaction.detail', compact('data'));
+        // $data = DB::table('transactions')
+        //     ->join('transaction_details', 'transactions.id', '=',  'transaction_details.transactions_id')
+        //     ->select('transactions.*', 'transaction_details.*')
+        //     ->get();
+        // return view('admin.pages.transaction.detail', compact('data'));
+        // return view('admin.pages.transaction.detail', [
+        //     'transaction' => Transaction::all(),
+        //     'details' => TransactionDetail::all()
+        // ]);
+        $id = $transaction->id;
+        $data = TransactionDetail::where('transaction_id', $id)->with('product')->get();
+        return view('admin.pages.transaction.detail', [
+            'data' => $data,
+            'transaction' => $transaction
+        ]);
     }
 
     /**

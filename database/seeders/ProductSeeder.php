@@ -21,16 +21,16 @@ class ProductSeeder extends Seeder
         $faker = Factory::create('id_ID');
         $categories = Category::get();
         //$image = "images";
-        for ($i = 0; $i < 100; $i++) {
-        Product::create([
-            "category_id" => $categories->random()->id,
-            "title" => 'palugada',
-            "status" => 'active',
-            "description" => 'palugada',
-            "image" => 'images/product/ATmfYfUuxFHxNaCaKfRLN4X2LrVPri1zxxN3ezgn.png',
-            "weight" => 10,
-            "price" => 10,
-        ]);
-    }
+        for ($i = 0; $i < 10; $i++) {
+            Product::create([
+                "category_id" => $categories->random()->id,
+                "title" => 'palugada',
+                "status" => 'active',
+                "description" => 'palugada',
+                "image" => 'images/product/ATmfYfUuxFHxNaCaKfRLN4X2LrVPri1zxxN3ezgn.png',
+                "weight" => 10,
+                "price" => 10,
+            ]);
+        }
     }
 }

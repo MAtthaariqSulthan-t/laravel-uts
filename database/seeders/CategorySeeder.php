@@ -19,11 +19,13 @@ class CategorySeeder extends Seeder
         //Category::truncate();
         $categories = ['Monitor', 'Casing', 'Mouse', 'Keyboard'];
         foreach ($categories as $key => $category) {
-            Category::create([
-                "name" => $category,
-                "description" => "Category $category",
-                "status" => "active"
-            ]);
+            for ($i = 0; $i < 100; $i++) {
+                Category::create([
+                    "name" => $category,
+                    "description" => "Category $category",
+                    "status" => "active"
+                ]);
+            }
         }
     }
 }
