@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     use HasFactory;
-    protected $fillable=['id', 'customer', 'total_amount'];
-    public $incrementing=false;
+    protected $fillable = ['id', 'customer', 'address', 'total_amount'];
+    public $incrementing = false;
 
     public function details()
     {

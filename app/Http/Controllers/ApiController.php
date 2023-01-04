@@ -33,10 +33,10 @@ class ApiController extends Controller
         $productIds = collect($params['products']); //dijadikan sakti
         $productIds = $productIds->pluck('id');
         //cara primitif menjadikan sakti
-        $productIds = [];
-        foreach ($params['products'] as $value) {
-            $productIds[] = $value['id'];
-        }
+        // $productIds = [];
+        // foreach ($params['products'] as $value) {
+        //     $productIds[] = $value['id'];
+        // }
 
         $products = Product::whereIn('id', $productIds)->get();
         $total_amount = 0;

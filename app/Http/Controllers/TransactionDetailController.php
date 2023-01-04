@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TransactionDetail;
 use App\Http\Requests\StoreTransactionDetailRequest;
 use App\Http\Requests\UpdateTransactionDetailRequest;
+use App\Models\Transaction;
 
 class TransactionDetailController extends Controller
 {
@@ -13,9 +14,14 @@ class TransactionDetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Transaction $transaction)
     {
-        //
+        // foreach ($data->details as $item) {
+        //     $colection = collect($data);
+        //     $result = $item->amount * count($item->quantity);
+        // }
+        $data = $transaction->load(['details']);
+        return view('admin.pages.transaction.detail', compact('data'));
     }
 
     /**
@@ -49,7 +55,6 @@ class TransactionDetailController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *

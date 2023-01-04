@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\StoreProductRequest;
@@ -39,7 +40,14 @@ class ProductController extends Controller
             return $data->get();
         });
         // $categories = Category::get();
-        return view('admin.pages.product.list', ['data' => $data]);
+        // $order = request('order');
+        // $sort = request('sort');
+        // $data = Product::table('id')->orderBy($order, $sort)->get();
+        return view('admin.pages.product.list', [
+            'data' => $data,
+            'title' => "Product Table",
+            'subtitle' => "DataProductTable"
+        ]);
     }
 
     /**
@@ -51,7 +59,7 @@ class ProductController extends Controller
     {
         $product = new Product();
         $categories = Category::all();
-        return view('pages.product.form', ['product' => $product], ['categories' => $categories]);
+        return view('admin.pages.product.form', ['product' => $product], ['categories' => $categories]);
     }
 
     /**
@@ -91,7 +99,7 @@ class ProductController extends Controller
         if (!Auth::user()->hasPermissionTo('form category')) {
             return redirect()->route('category.index')->with('notif');
         }
-        return view('pages.product.form', [
+        return view('admin.pages.product.form', [
             'product' => $product,
             'categories' => Category::get()
         ]);

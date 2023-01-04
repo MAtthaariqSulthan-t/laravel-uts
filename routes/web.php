@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransactionDetailController;
+use App\Models\TransactionDetail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,11 +29,15 @@ Auth::routes(['verify' => true]);
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('product', ProductController::class);
     Route::resource('category', CategoryController::class);
-    Route::get('/transaction', [TransactionController::class, 'store']);
+    Route::resource('/transaction', TransactionController::class);
+    Route::resource('/transactionDetail', TransactionDetailController::class);
+    Route::resource('/checkout', CheckoutController::class);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/example', [App\Http\Controllers\ExampleController::class, 'example'])->name('example');
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/chart', [CheckoutController::class, 'chart'])->name('chart');
 });
+
 
 // Route::get('/send-mail', function() {
 //     Mail::to('asd@gmail.com')->send(new MailtrapExample());
